@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
@@ -17,7 +17,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
   imports: [CommonModule, FormsModule, IonicModule], 
   schemas: [CUSTOM_ELEMENTS_SCHEMA] 
 })
-export class FormProfPage {
+export class FormProfPage implements OnInit {
   specialization = '';
   remarks = '';
   professorId!: string;

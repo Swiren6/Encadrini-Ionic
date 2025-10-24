@@ -6,6 +6,7 @@ import { AlertController } from '@ionic/angular';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-professor-home',
@@ -16,7 +17,8 @@ import { FormsModule } from '@angular/forms';
     IonicModule,
     CommonModule,
     FormsModule,
-    DatePipe
+    DatePipe,
+    RouterLink 
   ]
 })
 
@@ -61,8 +63,17 @@ export class ProfessorHomePage implements OnInit {
     this.statistics.pending = this.requests.filter(r => r.status === 'pending').length;
     this.statistics.accepted = this.requests.filter(r => r.status === 'accepted').length;
     this.statistics.rejected = this.requests.filter(r => r.status === 'rejected').length;
+    this.updateStatCards();
   }
 
+  updateStatCards() {
+  this.statCards = [
+    { label: 'Total', value: this.statistics.total, icon: 'documents-outline', class: 'primary' },
+    { label: 'En attente', value: this.statistics.pending, icon: 'time-outline', class: 'warning' },
+    { label: 'Acceptées', value: this.statistics.accepted, icon: 'checkmark-circle-outline', class: 'success' },
+    { label: 'Rejetées', value: this.statistics.rejected, icon: 'close-circle-outline', class: 'danger' },
+  ];
+}
   statCards = [
   { label: 'Total', value: this.statistics.total, icon: 'documents-outline', class: 'primary' },
   { label: 'En attente', value: this.statistics.pending, icon: 'time-outline', class: 'warning' },
@@ -157,4 +168,5 @@ export class ProfessorHomePage implements OnInit {
       default: return 'help-outline';
     }
   }
+  
 }
