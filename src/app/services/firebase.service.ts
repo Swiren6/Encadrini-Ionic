@@ -155,4 +155,12 @@ export class FirebaseService {
     const userDoc = doc(this.firestore, 'users', id);
     await updateDoc(userDoc, data);
   }
+  async createProfessorProfile(userId: string, data: Omit<Professor, 'id'>): Promise<void> {
+  await setDoc(doc(this.firestore, 'professors', userId), {
+    ...data,
+    available: true,
+    maxStudents: 5,
+    id: userId
+  });
+}
 }

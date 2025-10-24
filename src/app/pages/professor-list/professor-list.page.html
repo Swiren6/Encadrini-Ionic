@@ -3,12 +3,12 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/student-home"></ion-back-button>
     </ion-buttons>
-    <ion-title>Liste des Professeurs </ion-title>
+    <ion-title>Liste des Professeurs</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content fullscreen>
-  <!-- Barre de recherche -->
+  <!-- Search Bar -->
   <div class="search-section">
     <ion-searchbar
       [(ngModel)]="searchTerm"
@@ -17,26 +17,37 @@
       animated="true">
     </ion-searchbar>
   </div>
-  <div class="filters">
-  <ion-segment [(ngModel)]="selectedFilter" mode="ios">
-    <ion-segment-button value="all">
-      <ion-label>Tous</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="available">
-      <ion-label>Disponibles</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="specialization">
-      <ion-label>Spécialité</ion-label>
-    </ion-segment-button>
-  </ion-segment>
-</div>
 
-  <!-- Liste des professeurs -->
+  <!-- Filter Segment -->
+  <div class="filters">
+    <ion-segment 
+      [(ngModel)]="selectedFilter" 
+      mode="ios"
+      (ionChange)="onFilterChange($event)">
+      <ion-segment-button value="all">
+        <ion-label>Tous</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="available">
+        <ion-label>Disponibles</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="specialization">
+        <ion-label>Spécialisés</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <!-- Professors List -->
   <div class="ion-padding">
     <ion-grid>
       <ion-row>
-        <ion-col size="12" size-md="6" size-lg="4" *ngFor="let professor of filteredProfessors || []">
-          <ion-card class="professor-card">
+        <ion-col 
+          size="12" 
+          size-md="6" 
+          size-lg="4" 
+          *ngFor="let professor of filteredProfessors; trackBy: trackByProfessorId">
+          <ion-card 
+            class="professor-card"
+            [class.disabled]="!professor?.available">
             <ion-card-header>
               <div class="professor-avatar">
                 <ion-icon name="person-circle-outline"></ion-icon>
@@ -44,34 +55,42 @@
               <ion-card-title>{{ professor?.Fullname }}</ion-card-title>
               <ion-card-subtitle>
                 <ion-icon name="flask-outline"></ion-icon>
-                {{ professor?.specialization }}
+                {{ professor?.specialization || 'Non spécifié' }}
               </ion-card-subtitle>
             </ion-card-header>
 
             <ion-card-content>
+              <!-- Email -->
               <div class="info-item">
                 <ion-icon name="mail-outline"></ion-icon>
                 <span>{{ professor?.email }}</span>
               </div>
 
+              <!-- Remarks -->
               <div class="info-item">
                 <ion-icon name="chatbubbles-outline"></ion-icon>
                 <span>{{ professor?.remarks || 'Aucune remarque' }}</span>
               </div>
 
+              <!-- Availability Status -->
               <div class="availability-section">
                 <ion-chip [color]="professor?.available ? 'success' : 'danger'">
                   <ion-icon [name]="professor?.available ? 'checkmark-circle' : 'close-circle'"></ion-icon>
                   <ion-label>{{ professor?.available ? 'Disponible' : 'Non disponible' }}</ion-label>
                 </ion-chip>
 
-                <ion-chip color="primary" outline="true">
+                <ion-chip color="primary" [outline]="true">
                   <ion-icon name="people"></ion-icon>
                   <ion-label>{{ getAvailabilityText(professor) }}</ion-label>
                 </ion-chip>
               </div>
 
-              <ion-button expand="block" [disabled]="!professor?.available" class="request-btn">
+              <!-- Request Button -->
+              <ion-button 
+                expand="block" 
+                [disabled]="!professor?.available" 
+                (click)="selectProfessor(professor)"
+                class="request-btn">
                 <ion-icon name="send-outline" slot="start"></ion-icon>
                 Faire une demande
               </ion-button>
@@ -81,11 +100,14 @@
       </ion-row>
     </ion-grid>
 
-    <!-- Aucun résultat -->
+    <!-- Empty State -->
     <div *ngIf="filteredProfessors?.length === 0" class="empty-state">
       <ion-icon name="search-outline"></ion-icon>
       <h3>Aucun professeur trouvé</h3>
-      <p>Essayez avec un autre mot-clé</p>
+      <p *ngIf="searchTerm">Essayez avec un autre mot-clé</p>
+      <p *ngIf="!searchTerm && selectedFilter !== 'all'">
+        Aucun professeur ne correspond à ce filtre
+      </p>
     </div>
   </div>
 </ion-content>

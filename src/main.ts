@@ -9,18 +9,15 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
+// Environment and routes
+import { environment } from './environments/environment';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDukgjfPkaGlDTbgeaeh0NCSgWwp_7QrLA",
-  authDomain: "encadrini-42c37.firebaseapp.com",
-  projectId: "encadrini-42c37",
-  storageBucket: "encadrini-42c37.firebasestorage.app",
-  messagingSenderId: "366974741617",
-  appId: "1:366974741617:web:01114de0d611931e03bfd0",
-  measurementId: "G-4SEMGF3YBM"
-};
+// Enable production mode if environment is production
+if (environment.production) {
+  enableProdMode();
+}
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -29,9 +26,9 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     importProvidersFrom(HttpClientModule),
 
-    // Firebase providers
-    provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    // Firebase providers - using environment configuration
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())
   ],
-});
+}).catch(err => console.error('Application bootstrap error:', err));

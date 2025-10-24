@@ -6,6 +6,7 @@ import { Request } from '../../models/models';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-student-home',
   standalone: true,
@@ -21,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 export class StudentHomePage implements OnInit {
   requests: Request[] = [];
   userName: string = '';
+  
   statistics = {
     total: 0,
     pending: 0,
@@ -28,18 +30,19 @@ export class StudentHomePage implements OnInit {
     rejected: 0
   };
 
+  statCards = [
+    { label: 'Total', value: 0, icon: 'documents-outline', class: 'primary' },
+    { label: 'En attente', value: 0, icon: 'time-outline', class: 'warning' },
+    { label: 'Acceptées', value: 0, icon: 'checkmark-circle-outline', class: 'success' },
+    { label: 'Rejetées', value: 0, icon: 'close-circle-outline', class: 'danger' },
+  ];
+
   constructor(
     private authService: AuthService,
     private apiService: ApiService,
     private router: Router
   ) {}
 
-  statCards = [
-  { label: 'Total', value: this.statistics.total, icon: 'documents-outline', class: 'primary' },
-  { label: 'En attente', value: this.statistics.pending, icon: 'time-outline', class: 'warning' },
-  { label: 'Acceptées', value: this.statistics.accepted, icon: 'checkmark-circle-outline', class: 'success' },
-  { label: 'Rejetées', value: this.statistics.rejected, icon: 'close-circle-outline', class: 'danger' },
-];
   ngOnInit() {
     const user = this.authService.getUser();
     if (user) {
@@ -48,33 +51,97 @@ export class StudentHomePage implements OnInit {
     }
   }
 
+  /**
+   * Load all requests for the current student
+   */
   loadRequests() {
     const user = this.authService.getUser();
     if (user) {
-      this.apiService.getStudentRequests(user.id).subscribe(
-        requests => {
+      this.apiService.getStudentRequests(user.id).subscribe({
+        next: (requests) => {
           this.requests = requests;
           this.calculateStatistics();
+        },
+        error: (error) => {
+          console.error('Error loading requests:', error);
         }
-      );
+      });
     }
   }
 
+  /**
+   * Calculate statistics from requests
+   */
   calculateStatistics() {
     this.statistics.total = this.requests.length;
     this.statistics.pending = this.requests.filter(r => r.status === 'pending').length;
     this.statistics.accepted = this.requests.filter(r => r.status === 'accepted').length;
     this.statistics.rejected = this.requests.filter(r => r.status === 'rejected').length;
+    
+    // Update stat cards after calculating
+    this.updateStatCards();
   }
 
+  /**
+   * Update the statCards array with new values
+   * This ensures the UI updates correctly
+   */
+  updateStatCards() {
+    this.statCards = [
+      { 
+        label: 'Total', 
+        value: this.statistics.total, 
+        icon: 'documents-outline', 
+        class: 'primary' 
+      },
+      { 
+        label: 'En attente', 
+        value: this.statistics.pending, 
+        icon: 'time-outline', 
+        class: 'warning' 
+      },
+      { 
+        label: 'Acceptées', 
+        value: this.statistics.accepted, 
+        icon: 'checkmark-circle-outline', 
+        class: 'success' 
+      },
+      { 
+        label: 'Rejetées', 
+        value: this.statistics.rejected, 
+        icon: 'close-circle-outline', 
+        class: 'danger' 
+      },
+    ];
+  }
+
+  /**
+   * Navigate to professor list page
+   */
   goToProfessors() {
     this.router.navigate(['/professor-list']);
   }
 
+  /**
+   * Logout user and redirect to login
+   */
   logout() {
     this.authService.logout();
   }
 
+  /**
+   * Handle pull-to-refresh
+   */
+  handleRefresh(event: any) {
+    this.loadRequests();
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
+  }
+
+  /**
+   * Get color for status chip
+   */
   getStatusColor(status: string): string {
     switch(status) {
       case 'pending': return 'warning';
@@ -84,6 +151,9 @@ export class StudentHomePage implements OnInit {
     }
   }
 
+  /**
+   * Get French text for status
+   */
   getStatusText(status: string): string {
     switch(status) {
       case 'pending': return 'En attente';
@@ -93,6 +163,9 @@ export class StudentHomePage implements OnInit {
     }
   }
 
+  /**
+   * Get icon for status
+   */
   getStatusIcon(status: string): string {
     switch(status) {
       case 'pending': return 'time-outline';
@@ -100,5 +173,19 @@ export class StudentHomePage implements OnInit {
       case 'rejected': return 'close-circle-outline';
       default: return 'help-outline';
     }
+  }
+
+  /**
+   * Track by function for better performance in *ngFor
+   */
+  trackByRequestId(index: number, request: Request): string {
+    return request.id;
+  }
+
+  /**
+   * Track by function for stat cards
+   */
+  trackByStatLabel(index: number, stat: any): string {
+    return stat.label;
   }
 }

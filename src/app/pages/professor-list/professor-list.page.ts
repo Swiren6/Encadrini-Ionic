@@ -17,6 +17,7 @@ export class ProfessorListPage implements OnInit {
   professors: Professor[] = [];
   filteredProfessors: Professor[] = [];
   searchTerm: string = '';
+  selectedFilter: string = 'all';
 
   constructor(
     private readonly apiService: ApiService,
@@ -31,55 +32,98 @@ export class ProfessorListPage implements OnInit {
     this.apiService.getProfessors().subscribe(
       professors => {
         this.professors = professors;
-        this.filteredProfessors = professors;
+        this.applyFilters(); // Apply initial filter
       }
     );
   }
 
+  /**
+   * Handle search input change
+   */
   onSearchChange(event: any) {
     this.searchTerm = event.detail.value || '';
-    this.search();
+    this.applyFilters();
   }
 
-  search() {
-    if (!this.searchTerm) {
-      this.filteredProfessors = this.professors;
-      return;
+  /**
+   * Handle filter segment change
+   */
+  onFilterChange(event: any) {
+    this.selectedFilter = event.detail.value;
+    this.applyFilters();
+  }
+
+  /**
+   * Apply both search and filter
+   */
+  applyFilters() {
+    // First apply the filter
+    let filtered = [...this.professors];
+
+    // Apply selected filter
+    switch (this.selectedFilter) {
+      case 'all':
+        // Show all professors
+        break;
+      case 'available':
+        filtered = filtered.filter(prof => prof.available === true);
+        break;
+      case 'specialization':
+        // You can make this dynamic based on actual specializations
+        // For now, just show all (or filter by specific specialization)
+        filtered = filtered.filter(prof => prof.specialization && prof.specialization.trim() !== '');
+        break;
     }
 
-    const term = this.searchTerm.toLowerCase();
-    this.filteredProfessors = this.professors.filter(p =>
-      p.Fullname.toLowerCase().includes(term) ||
-      (p.specialization?.toLowerCase() ?? '').includes(term)
-    );
+    // Then apply search if there's a search term
+    if (this.searchTerm && this.searchTerm.trim() !== '') {
+      const term = this.searchTerm.toLowerCase().trim();
+      filtered = filtered.filter(prof =>
+        prof.Fullname.toLowerCase().includes(term) ||
+        (prof.specialization?.toLowerCase() ?? '').includes(term) ||
+        (prof.email?.toLowerCase() ?? '').includes(term)
+      );
+    }
+
+    this.filteredProfessors = filtered;
   }
 
+  /**
+   * Select a professor and navigate to request form
+   */
   selectProfessor(professor: Professor) {
-    if (professor.available) {
+    if (professor.available && professor.id) {
       this.router.navigate(['/request-form', professor.id]);
     }
   }
 
+  /**
+   * Navigate back to student home
+   */
   goBack() {
     this.router.navigate(['/student-home']);
   }
 
+  /**
+   * Get availability text for a professor
+   */
   getAvailabilityText(professor: Professor): string {
-    return professor.available ? 'Disponible' : 'Non disponible';
+    if (!professor.available) {
+      return 'Non disponible';
+    }
+    
+    const maxStudents = professor.maxStudents || 0;
+    if (maxStudents > 0) {
+      return `${maxStudents} places`;
+    }
+    
+    return 'Disponible';
   }
-  selectedFilter = 'all'; // Valeur par défaut
 
-applyFilter() {
-  if (this.selectedFilter === 'all') {
-    this.filteredProfessors = this.professors;
-  } else if (this.selectedFilter === 'available') {
-    this.filteredProfessors = this.professors.filter(
-      prof => !!prof.available
-    );
-  } else if (this.selectedFilter === 'specialization') {
-    this.filteredProfessors = this.professors.filter(
-      prof => (prof.specialization?.toLowerCase() ?? '').includes('informatique')
-    );
+  /**
+   * Track by function for performance optimization
+   */
+  trackByProfessorId(index: number, professor: Professor): string {
+    return professor.id || index.toString();
   }
-}
 }
