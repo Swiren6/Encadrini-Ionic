@@ -1,0 +1,16 @@
+.form-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 79, 144, 0.15);
+}
+
+ion-card-title {
+  font-weight: 700;
+  color: #004f90;
+}
+
+.save-btn {
+  --background: linear-gradient(135deg, #004f90, #2563eb);
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 79, 144, 0.3);
+}

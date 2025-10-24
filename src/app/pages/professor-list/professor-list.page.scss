@@ -1,0 +1,192 @@
+/* ==============================
+   Encadrini - Liste des Professeurs
+   Design moderne & coloré
+   ============================== */
+
+ion-toolbar {
+  --background: linear-gradient(135deg, #004f90, #2563eb);
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 79, 144, 0.25);
+}
+
+ion-title {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+ion-back-button {
+  color: #fff;
+}
+
+/* Barre de recherche */
+.search-section {
+  margin-top: 1rem;
+  padding: 0 1rem;
+}
+
+ion-searchbar {
+  --background: #ffffff;
+  --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  --border-radius: 10px;
+  --placeholder-color: #666;
+  color: #111;
+}
+
+/* Carte Professeur */
+.professor-card {
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0, 79, 144, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  background: #fff;
+  cursor: pointer;
+}
+
+.professor-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 25px rgba(0, 79, 144, 0.25);
+}
+
+.professor-card.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Header de la carte */
+.professor-avatar {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.professor-avatar ion-icon {
+  font-size: 4rem;
+  color: #004f90;
+}
+
+ion-card-title {
+  text-align: center;
+  font-weight: 700;
+  color: #222;
+  margin-top: 0.5rem;
+}
+
+ion-card-subtitle {
+  text-align: center;
+  color: #666;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Contenu de la carte */
+ion-card-content {
+  padding: 1rem 1.2rem;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #444;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+.filters {
+  margin-top: 0.5rem;
+  padding: 0 1rem;
+}
+
+ion-segment {
+  --background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+ion-segment-button {
+  font-weight: 600;
+  --indicator-color: transparent; /* enlève la barre bleue par défaut */
+  color: #004f90;
+  transition: all 0.2s ease;
+}
+
+ion-segment-button.ion-activated {
+  background: linear-gradient(135deg, #004f90, #2563eb);
+  border-radius: 8px;
+  color: #fff !important; /* texte blanc */
+}
+
+/* ✅ Correction pour que le label soit bien visible aussi */
+ion-segment-button.ion-activated ion-label {
+  color: #fff !important;
+  font-weight: 700;
+}
+
+/* Optionnel : animation subtile à la sélection */
+ion-segment-button.ion-activated {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 79, 144, 0.3);
+}
+/* Disponibilité */
+.availability-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.8rem 0;
+}
+
+ion-chip {
+  font-size: 0.8rem;
+  border-radius: 8px;
+}
+
+.request-btn {
+  margin-top: 0.8rem;
+  border-radius: 10px;
+  font-weight: 600;
+  --background: linear-gradient(135deg, #004f90, #2563eb);
+  box-shadow: 0 4px 10px rgba(0, 79, 144, 0.3);
+}
+
+.request-btn:disabled {
+  --background: #ccc;
+  color: #666;
+  box-shadow: none;
+}
+
+/* État vide */
+.empty-state {
+  text-align: center;
+  margin-top: 3rem;
+  color: #004f90;
+}
+
+.empty-state ion-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Mode sombre */
+@media (prefers-color-scheme: dark) {
+  ion-toolbar {
+    --background: linear-gradient(135deg, #1e293b, #334155);
+  }
+
+  ion-searchbar {
+    --background: #1f2937;
+    color: #e5e7eb;
+  }
+
+  .professor-card {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  ion-card-title,
+  ion-card-subtitle,
+  .info-item {
+    color: #e5e7eb;
+  }
+
+  .request-btn {
+    box-shadow: none;
+  }
+}

@@ -1,0 +1,83 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title> Accueil Étudiant</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <!-- Section d’accueil -->
+  <div class="welcome-section">
+    <ion-icon name="person-circle-outline" class="welcome-icon"></ion-icon>
+    <h2>Bonjour, <span>{{ userName }}</span> 👋</h2>
+    <p>Gérez facilement vos demandes d'encadrement académique</p>
+  </div>
+
+  <!-- Statistiques -->
+  <div class="stats-container">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" size-md="3" *ngFor="let stat of statCards">
+          <ion-card class="stat-card" [ngClass]="stat.class">
+            <ion-card-content>
+              <ion-icon [name]="stat.icon"></ion-icon>
+              <h3>{{ stat.value }}</h3>
+              <p>{{ stat.label }}</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Bouton professeurs -->
+  <div class="ion-padding">
+    <ion-button expand="block" (click)="goToProfessors()" class="main-btn">
+      <ion-icon name="people-outline" slot="start"></ion-icon>
+      Voir les professeurs disponibles
+    </ion-button>
+  </div>
+
+  <!-- Section des demandes -->
+  <div class="ion-padding">
+    <h3 class="section-title">📄 Mes demandes d'encadrement</h3>
+
+    <ion-card *ngIf="requests.length === 0" class="empty-card">
+      <ion-card-content class="empty-state">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <h4>Aucune demande</h4>
+        <p>Vous n'avez pas encore soumis de demande.</p>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngFor="let request of requests" class="request-card">
+      <ion-card-header>
+        <div class="card-header">
+          <div>
+            <ion-card-title>{{ request.projectTitle }}</ion-card-title>
+            <ion-card-subtitle>
+              <ion-icon name="person-outline"></ion-icon>
+              Prof. {{ request.professorName }}
+            </ion-card-subtitle>
+          </div>
+          <ion-chip [color]="getStatusColor(request.status)">
+            <ion-icon [name]="getStatusIcon(request.status)"></ion-icon>
+            <ion-label>{{ getStatusText(request.status) }}</ion-label>
+          </ion-chip>
+        </div>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p class="description">{{ request.description }}</p>
+        <div class="meta-info">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <small>{{ request.date | date: 'dd/MM/yyyy HH:mm' }}</small>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

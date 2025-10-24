@@ -1,0 +1,7 @@
+{
+  "name": "encadrini-new",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

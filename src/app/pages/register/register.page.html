@@ -1,0 +1,102 @@
+<ion-content>
+  <div class="register-wrapper">
+    <div class="logo-section">
+      <ion-icon name="person-add-outline"></ion-icon>
+      <h1>Créer un compte</h1>
+      <p>Rejoignez la plateforme Encadrini</p>
+    </div>
+
+    <form class="register-form">
+      <ion-item lines="none">
+        <ion-label position="floating">Nom complet *</ion-label>
+        <ion-input 
+          type="text" 
+          [(ngModel)]="fullname"
+          name="fullname"
+          placeholder="Ex: Ahmed Ben Ali">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Email *</ion-label>
+        <ion-input 
+          type="email" 
+          [(ngModel)]="email"
+          name="email"
+          placeholder="exemple@email.com">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Mot de passe *</ion-label>
+        <ion-input 
+          [type]="showPassword ? 'text' : 'password'" 
+          [(ngModel)]="password"
+          name="password"
+          placeholder="Minimum 6 caractères">
+        </ion-input>
+        <ion-button fill="clear" slot="end" (click)="togglePasswordVisibility()">
+          <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Confirmer le mot de passe *</ion-label>
+        <ion-input 
+          [type]="showConfirmPassword ? 'text' : 'password'" 
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          placeholder="Retapez votre mot de passe">
+        </ion-input>
+        <ion-button fill="clear" slot="end" (click)="toggleConfirmPasswordVisibility()">
+          <ion-icon [name]="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <div class="role-section">
+  <p class="role-label">Je suis :</p>
+
+  <ion-segment
+    name="role"
+    [(ngModel)]="role"
+    (ionChange)="onRoleChange($event)"
+    mode="ios"
+  >
+    <ion-segment-button value="student">
+      <ion-icon name="school-outline"></ion-icon>
+      <ion-label>Étudiant</ion-label>
+    </ion-segment-button>
+
+    <ion-segment-button value="professor">
+      <ion-icon name="person-outline"></ion-icon>
+      <ion-label>Professeur</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- test visuel -->
+  <p style="text-align:center; color:#004f90; font-weight:600;">
+    Rôle sélectionné : {{ role }}
+  </p>
+</div>
+
+      <ion-button expand="block" (click)="register()" class="register-btn"
+  [disabled]="!fullname || !email || !password || !confirmPassword">
+  <ion-icon name="person-add-outline" slot="start"></ion-icon>
+  Créer mon compte
+</ion-button>
+
+<!-- Message de succès -->
+      <div class="success-message" *ngIf="showSuccess">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        <p>Compte créé avec succès 🎉</p>
+      </div>
+    </form>
+
+    <div class="bottom-section">
+      <div class="login-link">
+        <p>Vous avez déjà un compte ?</p>
+        <ion-button fill="clear" (click)="goToLogin()">Se connecter</ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

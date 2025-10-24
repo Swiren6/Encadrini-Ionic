@@ -1,0 +1,91 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/student-home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Liste des Professeurs </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <!-- Barre de recherche -->
+  <div class="search-section">
+    <ion-searchbar
+      [(ngModel)]="searchTerm"
+      (ionInput)="onSearchChange($event)"
+      placeholder="Rechercher un professeur ou une spécialité..."
+      animated="true">
+    </ion-searchbar>
+  </div>
+  <div class="filters">
+  <ion-segment [(ngModel)]="selectedFilter" mode="ios">
+    <ion-segment-button value="all">
+      <ion-label>Tous</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="available">
+      <ion-label>Disponibles</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="specialization">
+      <ion-label>Spécialité</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</div>
+
+  <!-- Liste des professeurs -->
+  <div class="ion-padding">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-md="6" size-lg="4" *ngFor="let professor of filteredProfessors || []">
+          <ion-card class="professor-card">
+            <ion-card-header>
+              <div class="professor-avatar">
+                <ion-icon name="person-circle-outline"></ion-icon>
+              </div>
+              <ion-card-title>{{ professor?.Fullname }}</ion-card-title>
+              <ion-card-subtitle>
+                <ion-icon name="flask-outline"></ion-icon>
+                {{ professor?.specialization }}
+              </ion-card-subtitle>
+            </ion-card-header>
+
+            <ion-card-content>
+              <div class="info-item">
+                <ion-icon name="mail-outline"></ion-icon>
+                <span>{{ professor?.email }}</span>
+              </div>
+
+              <div class="info-item">
+                <ion-icon name="chatbubbles-outline"></ion-icon>
+                <span>{{ professor?.remarks || 'Aucune remarque' }}</span>
+              </div>
+
+              <div class="availability-section">
+                <ion-chip [color]="professor?.available ? 'success' : 'danger'">
+                  <ion-icon [name]="professor?.available ? 'checkmark-circle' : 'close-circle'"></ion-icon>
+                  <ion-label>{{ professor?.available ? 'Disponible' : 'Non disponible' }}</ion-label>
+                </ion-chip>
+
+                <ion-chip color="primary" outline="true">
+                  <ion-icon name="people"></ion-icon>
+                  <ion-label>{{ getAvailabilityText(professor) }}</ion-label>
+                </ion-chip>
+              </div>
+
+              <ion-button expand="block" [disabled]="!professor?.available" class="request-btn">
+                <ion-icon name="send-outline" slot="start"></ion-icon>
+                Faire une demande
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <!-- Aucun résultat -->
+    <div *ngIf="filteredProfessors?.length === 0" class="empty-state">
+      <ion-icon name="search-outline"></ion-icon>
+      <h3>Aucun professeur trouvé</h3>
+      <p>Essayez avec un autre mot-clé</p>
+    </div>
+  </div>
+</ion-content>

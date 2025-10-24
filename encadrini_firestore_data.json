@@ -1,0 +1,82 @@
+{
+  "students": {
+    "student1": {
+      "fullname": "Sirine Abdelkhalek",
+      "email": "sirine@tekup.tn",
+      "speciality": "Informatique",
+      "year": "5ème année"
+    },
+    "student2": {
+      "fullname": "Amina Ben Salah",
+      "email": "amina@tekup.tn",
+      "speciality": "Réseaux",
+      "year": "4ème année"
+    },
+    "student3": {
+      "fullname": "Youssef Trabelsi",
+      "email": "youssef@tekup.tn",
+      "speciality": "Cloud",
+      "year": "5ème année"
+    }
+  },
+  "professors": {
+    "prof1": {
+      "fullname": "Dr. Ahmed Ben Ali",
+      "email": "ahmed@tekup.tn",
+      "specialization": "Data Science",
+      "maxStudents": 5,
+      "currentStudents": 2,
+      "available": true
+    },
+    "prof2": {
+      "fullname": "Dr. Fatma Gharbi",
+      "email": "fatma@tekup.tn",
+      "specialization": "Intelligence Artificielle",
+      "maxStudents": 4,
+      "currentStudents": 4,
+      "available": false
+    },
+    "prof3": {
+      "fullname": "Dr. Karim Bouzid",
+      "email": "karim@tekup.tn",
+      "specialization": "Cybersécurité",
+      "maxStudents": 3,
+      "currentStudents": 1,
+      "available": true
+    }
+  },
+  "requests": {
+    "req1": {
+      "studentId": "student1",
+      "professorId": "prof1",
+      "projectTitle": "Assistant scolaire intelligent",
+      "description": "Application d'assistance aux étudiants via IA",
+      "status": "pending"
+    },
+    "req2": {
+      "studentId": "student2",
+      "professorId": "prof3",
+      "projectTitle": "Système de détection d’intrusions",
+      "description": "Projet de sécurité réseau basé sur l’IA",
+      "status": "accepted"
+    }
+  },
+  "specializations": {
+    "sp1": {
+      "name": "Intelligence Artificielle",
+      "color": "#2563eb"
+    },
+    "sp2": {
+      "name": "Data Science",
+      "color": "#7b61ff"
+    },
+    "sp3": {
+      "name": "Cybersécurité",
+      "color": "#22c55e"
+    },
+    "sp4": {
+      "name": "Cloud Computing",
+      "color": "#06b6d4"
+    }
+  }
+}

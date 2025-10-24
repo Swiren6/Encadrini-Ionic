@@ -1,0 +1,37 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/professor-home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>📝 Mes informations</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="ion-padding">
+  <ion-card class="form-card">
+    <ion-card-header>
+      <ion-card-title>Mettre à jour mes informations</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form (ngSubmit)="saveProfessorInfo()">
+        <ion-item>
+          <ion-label position="floating">Spécialité</ion-label>
+          <ion-input [(ngModel)]="specialization" name="specialization" placeholder="Ex: Data Science"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Remarques</ion-label>
+          <ion-textarea
+            [(ngModel)]="remarks"
+            name="remarks"
+            placeholder="Ajoutez vos remarques, expériences ou préférences..."
+          ></ion-textarea>
+        </ion-item><ion-button expand="block" type="submit" class="save-btn ion-margin-top">
+          <ion-icon name="save-outline" slot="start"></ion-icon>
+          Sauvegarder
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

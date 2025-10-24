@@ -1,0 +1,168 @@
+/* ==============================
+   Encadrini - Accueil Étudiant
+   Design professionnel & coloré
+   ============================== */
+
+
+
+.logout-btn {
+  color: #fff !important; /* force la couleur blanche pour header bleu */
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+}
+
+ion-toolbar {
+  --background: linear-gradient(135deg, #004f90, #2563eb);
+  color: #fff;
+}
+
+ion-title {
+  color: #fff;
+  font-weight: 700;
+}
+
+/* Section d'accueil */
+.welcome-section {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+.welcome-icon {
+  font-size: 5rem;
+  color: #004f90;
+  animation: pulseIcon 2s infinite;
+}
+
+@keyframes pulseIcon {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.9; }
+}
+
+.welcome-section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.welcome-section h2 span {
+  color: #004f90;
+}
+
+.welcome-section p {
+  color: #555;
+  margin-top: 0.3rem;
+}
+
+/* Statistiques */
+.stats-container {
+  margin-top: 1.5rem;
+  padding: 0 1rem;
+}
+
+.stat-card {
+  text-align: center;
+  border-radius: 14px;
+  color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.stat-card ion-card-content {
+  padding: 1.2rem 0.5rem;
+}
+
+.stat-card ion-icon {
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+
+.stat-card h3 {
+  font-size: 1.6rem;
+  margin: 0.2rem 0;
+  font-weight: 700;
+}
+
+.stat-card p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Couleurs dynamiques */
+.stat-card.primary { background: linear-gradient(135deg, #004f90, #2563eb); }
+.stat-card.warning { background: linear-gradient(135deg, #ffb100, #ff8800); }
+.stat-card.success { background: linear-gradient(135deg, #16a34a, #22c55e); }
+.stat-card.danger { background: linear-gradient(135deg, #dc2626, #ef4444); }
+
+.stat-card:hover {
+  transform: scale(1.04);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Bouton principal */
+.main-btn {
+  margin-top: 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  --background: linear-gradient(135deg, #004f90, #2563eb);
+  box-shadow: 0 6px 15px rgba(0, 79, 144, 0.3);
+  transition: transform 0.2s ease;
+}
+
+.main-btn:hover {
+  transform: scale(1.03);
+}
+
+/* Section titres et demandes */
+.section-title {
+  margin-top: 2rem;
+  font-weight: 700;
+  color: #004f90;
+  text-align: center;
+}
+
+/* Cartes de demandes */
+.request-card {
+  margin-top: 1rem;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.request-card:hover {
+  transform: scale(1.02);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.description {
+  color: #444;
+  font-size: 0.9rem;
+}
+
+.meta-info {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.4rem;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+/* Carte vide */
+.empty-card {
+  margin-top: 1.5rem;
+  text-align: center;
+  border-radius: 12px;
+  background: rgba(0, 79, 144, 0.05);
+  color: #004f90;
+}
+
+.empty-state ion-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #004f90;
+}

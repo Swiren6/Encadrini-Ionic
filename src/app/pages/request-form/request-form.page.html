@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/professor-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nouvelle Demande</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card *ngIf="professor" class="professor-info-card">
+    <ion-card-content>
+      <div class="professor-header">
+        <ion-icon name="person-circle-outline" color="primary"></ion-icon>
+        <div>
+          <h2>{{professor.Fullname}}</h2>
+          <p>{{professor.specialization}}</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="document-text-outline"></ion-icon>
+        Détails du projet
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="floating">
+          Titre du projet <span class="required">*</span>
+        </ion-label>
+        <ion-input 
+          [(ngModel)]="projectTitle" 
+          placeholder="Ex: Application mobile de gestion...">
+        </ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">
+          Description détaillée <span class="required">*</span>
+        </ion-label>
+        <ion-textarea 
+          [(ngModel)]="description" 
+          rows="8"
+          placeholder="Décrivez votre projet: objectifs, méthodologie, résultats attendus...">
+        </ion-textarea>
+      </ion-item>
+
+      <ion-card class="info-card">
+        <ion-card-content>
+          <ion-icon name="information-circle-outline" color="primary"></ion-icon>
+          <div>
+            <strong>Conseils pour votre demande :</strong>
+            <ul>
+              <li>Soyez clair et précis dans votre description</li>
+              <li>Expliquez pourquoi ce professeur est le bon choix</li>
+              <li>Mentionnez vos compétences pertinentes</li>
+            </ul>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+      <div class="buttons-section">
+        <ion-button 
+          expand="block" 
+          color="medium" 
+          fill="outline" 
+          (click)="cancel()">
+          <ion-icon name="close-outline" slot="start"></ion-icon>
+          Annuler
+        </ion-button>
+        <ion-button 
+          expand="block" 
+          (click)="submit()"
+          [disabled]="!projectTitle || !description">
+          <ion-icon name="send" slot="start"></ion-icon>
+          Envoyer la demande
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

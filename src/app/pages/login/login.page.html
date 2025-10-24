@@ -1,0 +1,52 @@
+<ion-content>
+  <div class="login-wrapper">
+    <div class="logo-section">
+      <ion-icon name="school-outline"></ion-icon>
+      <h1>Encadrini</h1>
+      <p>Plateforme de gestion d'encadrement académique</p>
+    </div>
+
+    <form class="login-form">
+      <ion-item lines="none">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="exemple@email.com">
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label position="floating">Mot de passe</ion-label>
+        <ion-input
+          [type]="showPassword ? 'text' : 'password'"
+          [(ngModel)]="password"
+          name="password"
+          placeholder="••••••••">
+        </ion-input>
+        <ion-button fill="clear" slot="end" (click)="togglePasswordVisibility()">
+          <ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+        </ion-button>
+      </ion-item>
+
+      <ion-button expand="block" (click)="login()" class="login-btn">
+        <ion-icon name="log-in-outline" slot="start"></ion-icon>
+        Se connecter
+      </ion-button>
+    </form>
+
+    <div class="bottom-section">
+      <div class="register-link">
+        <p>Vous n'avez pas de compte ?</p>
+        <ion-button fill="clear" (click)="goToRegister()">Créer un compte</ion-button>
+      </div>
+
+      <div class="info-box">
+        <p><strong>🧪 Comptes de test :</strong></p>
+        <p>Étudiant : student@test.com / pass123</p>
+        <p>Professeur : prof@test.com / pass123</p>
+      </div>
+    </div>
+  </div>
+</ion-content>
